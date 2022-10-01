@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -23,4 +24,16 @@ public class News {
 
     @Column
     private String requirement;
+
+    @Column
+    private Instant startDate;
+
+    @Column
+    private Instant endDate;
+
+    @Column
+    private String salary;
+
+    @Column
+    private String position;
 }

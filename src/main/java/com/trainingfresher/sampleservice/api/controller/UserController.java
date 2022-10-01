@@ -1,6 +1,8 @@
 package com.trainingfresher.sampleservice.api.controller;
 
 
+import com.trainingfresher.sampleservice.api.response.ApiResponse;
+import com.trainingfresher.sampleservice.repository.result.NewsResult;
 import com.trainingfresher.sampleservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,12 +11,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -62,5 +66,13 @@ public class UserController {
                 .contentType(MediaType.parseMediaType("application/txt")).body(resource);
 
         return responseEntity;
+    }
+
+    @PostMapping ("/searchJob")
+    public ResponseEntity<Object> searchJob(@RequestParam String address, @RequestParam String salary,@RequestParam String position) throws IOException
+    {
+        List<Object> results = userService.searchJob(address,salary,position);
+        ApiResponse response = ApiResponse.success(results, HttpStatus.OK.value(), "Danh sách thông tin tuyển dụng");
+        return ResponseEntity.ok(response);
     }
 }
